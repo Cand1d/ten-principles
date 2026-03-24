@@ -1,4 +1,4 @@
-# Ten Principles for a Life Fully Lived
+# Ten Principles
 
 ## The Complete Ten
 
