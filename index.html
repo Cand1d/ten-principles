@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ten Principles</title>
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0a0a0f;
+  color: #e0e0e0;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+header {
+  padding: 80px 0 40px;
+  text-align: center;
+  position: relative;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #4a9eff, transparent);
+}
+
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.subtitle .word {
+  color: #4a9eff;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+.subtitle .word:hover {
+  opacity: 1;
+}
+
+.subtitle .dot {
+  color: #555;
+}
+
+/* Tagline */
+.tagline {
+  padding: 32px 0 48px;
+  text-align: center;
+}
+
+.tagline p {
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: #999;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Principles */
+.principles {
+  padding-bottom: 60px;
+}
+
+.principle-card {
+  background: #12121a;
+  border: 1px solid #1e1e2e;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.principle-card:hover {
+  border-color: #2a2a3e;
+  box-shadow: 0 0 20px rgba(74, 158, 255, 0.04);
+}
+
+.principle-card.active {
+  border-color: #4a9eff33;
+  box-shadow: 0 0 30px rgba(74, 158, 255, 0.06);
+}
+
+.principle-header {
+  padding: 20px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  user-select: none;
+  position: relative;
+}
+
+.principle-header:hover {
+  background: #14141e;
+}
+
+.principle-number {
+  font-size: 0.8rem;
+  color: #555;
+  font-weight: 600;
+  min-width: 24px;
+  padding-top: 2px;
+}
+
+.principle-info {
+  flex: 1;
+}
+
+.principle-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #4a9eff;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.principle-summary {
+  font-size: 0.85rem;
+  color: #888;
+  line-height: 1.7;
+}
+
+.principle-toggle {
+  color: #555;
+  font-size: 1.2rem;
+  min-width: 20px;
+  text-align: center;
+  padding-top: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.principle-card.active .principle-toggle {
+  transform: rotate(45deg);
+  color: #4a9eff;
+}
+
+.principle-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.principle-body-inner {
+  padding: 0 24px 28px;
+  padding-left: 64px;
+}
+
+.principle-body-inner p {
+  font-size: 0.9rem;
+  color: #c8c8d0;
+  line-height: 1.85;
+  margin-bottom: 16px;
+}
+
+.principle-body-inner p:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer */
+footer {
+  padding: 48px 0;
+  text-align: center;
+  border-top: 1px solid #1a1a2a;
+}
+
+footer p {
+  font-size: 0.75rem;
+  color: #444;
+}
+
+/* Glow accent at top */
+body::before {
+  content: '';
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(74, 158, 255, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  header {
+    padding: 48px 0 32px;
+  }
+  .principle-header {
+    padding: 16px 16px;
+    gap: 12px;
+  }
+  .principle-body-inner {
+    padding-left: 52px;
+    padding-right: 16px;
+  }
+  .container {
+    padding: 0 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Ten Principles</h1>
+    <div class="subtitle">
+      <span class="word">See</span><span class="dot">. </span><span class="word">Relate</span><span class="dot">. </span><span class="word">Rest</span><span class="dot">. </span><span class="word">Build</span><span class="dot">. </span><span class="word">Free</span><span class="dot">. </span><span class="word">Decide</span><span class="dot">. </span><span class="word">Stay</span><span class="dot">. </span><span class="word">Feel</span><span class="dot">. </span><span class="word">Own</span><span class="dot">. </span><span class="word">Be</span><span class="dot">.</span>
+    </div>
+  </header>
+
+  <div class="tagline">
+    <p>One thread connects all ten: face what's real, at its actual size, without performing.</p>
+  </div>
+
+  <div class="principles" id="principles"></div>
+
+  <footer>
+    <p>Ten Principles</p>
+  </footer>
+</div>
+
+<script>
+const principles = [
+  {
+    number: 1,
+    name: "See",
+    summary: "What gets defended hardest is what\u2019s least certain. Blind spots run the show until they\u2019re named. One honest sentence every morning changes that.",
+    essay: [
+      "You already know what you\u2019re avoiding. It\u2019s the thing you defend when questioned, the topic you steer conversations away from, the question you hope no one asks at dinner. The deepest self-deception doesn\u2019t feel like pretending \u2014 it feels like reality. You don\u2019t think \u201cI\u2019m pretending this job is fine.\u201d You think \u201cthis job is fine.\u201d The pretending is invisible to the pretender.",
+      "But there are three signals you can\u2019t fake. First: what do you defend most aggressively? The things you defend hardest are the things you\u2019re least sure of. Certainty doesn\u2019t need defense. Doubt does. When someone questions your career, your relationship, your choices \u2014 and you feel a flare of disproportionate heat \u2014 that\u2019s not conviction. That\u2019s a crack you\u2019re protecting.",
+      "Second: what does your body tighten around? Your chest constricts, your jaw clenches, your breathing changes \u2014 these happen before your mind can construct a defense. The body answers before the ego can intervene. When you\u2019re telling someone \u201cit\u2019s fine\u201d and your stomach disagrees, trust the stomach.",
+      "Third: what do you hope no one asks about? The area of your life you\u2019ve made boring to talk about so no one probes. That avoidance is a perfect arrow pointing at the thing you most need to look at.",
+      "That blind spot isn\u2019t harmless \u2014 it\u2019s running your life. Every decision you make is warped by the thing you won\u2019t look at. You\u2019re not choosing freely. You\u2019re choosing around the avoidance. The career you\u2019ve stayed in too long, the relationship you won\u2019t examine, the dream you\u2019ve filed under \u201cunrealistic\u201d \u2014 these aren\u2019t neutral positions. They\u2019re active choices to not look, and they cost you more with every year you maintain them.",
+      "The mind can dodge a question. It can\u2019t dodge all three signals at once.",
+      "Write one honest sentence every morning. No performance, no audience, no journaling system. Just the truth as it stands today. The sentence doesn\u2019t need to be profound. \u201cI don\u2019t want to go to work.\u201d \u201cI\u2019m angry and I don\u2019t know why.\u201d \u201cI\u2019m scared this isn\u2019t going to work.\u201d That\u2019s enough.",
+      "Over thirty days, your patterns become undeniable. Over ninety, your life starts rearranging itself around what you\u2019ve admitted. You cannot write \u201cI hate this project\u201d fourteen times and keep pretending it\u2019s fine. The data confronts you.",
+      "Self-awareness isn\u2019t meditation or personality tests or therapy jargon. It\u2019s the willingness to let yourself know what you already know. And the sentence you write \u2014 that\u2019s your next move. You just haven\u2019t acted on it yet."
+    ]
+  },
+  {
+    number: 2,
+    name: "Relate",
+    summary: "Every relationship has an unsaid thing. That silence is the ceiling on intimacy. Say it from care, not need \u2014 and stay when it lands badly.",
+    essay: [
+      "There is a specific thing you are not saying to a specific person. You know the thing. You know the person. It might be \u201cI need more from you.\u201d It might be \u201cthat hurt me.\u201d It might be \u201cI\u2019ve changed and I don\u2019t know how to tell you.\u201d It might be \u201cI love you and it scares me.\u201d It might be \u201cI need to leave.\u201d",
+      "You\u2019ve told yourself you\u2019re protecting them. You\u2019re not. You\u2019re protecting yourself \u2014 from their reaction, from the change it would require, from the possibility that saying it makes it real.",
+      "The silence is the ceiling on that relationship. Not chemistry, not compatibility, not time spent together. Just: what are you withholding? That\u2019s the exact height of your intimacy. Everything above it is locked.",
+      "And the relationship you\u2019re \u201cprotecting\u201d through silence isn\u2019t real. It\u2019s a performance both people are maintaining. The other person usually senses it anyway. They can feel the gap. They just can\u2019t name it. So you\u2019re not protecting them from the truth \u2014 you\u2019re protecting both of you from the vulnerability of speaking it.",
+      "Some people wield honesty like a weapon \u2014 \u201cI\u2019m just being real\u201d \u2014 and wonder why their relationships are shallow. Truth without care is cruelty. Care without truth is manipulation. The combination is what people actually mean when they say love.",
+      "Say what you\u2019d normally protect them from. But say it from care, not from need. If you need them to react a certain way \u2014 to validate you, to change, to apologize \u2014 it\u2019s not honesty. It\u2019s a transaction wearing honesty\u2019s clothes. The real version is saying what\u2019s true and being able to hold whatever comes back.",
+      "And then the hardest part: stay when it lands badly. The other person gets hurt, defensive, angry. This is the critical moment \u2014 not the speaking, but the staying. The willingness to remain present after the rupture, to repair without retreating into \u201cI shouldn\u2019t have said anything.\u201d",
+      "The relationships that last aren\u2019t the ones without rupture. They\u2019re the ones with rupture and repair, repeated over years. Because every time you break and come back together, both people learn: this relationship can hold the truth. And a relationship that can hold the truth can hold anything."
+    ]
+  },
+  {
+    number: 3,
+    name: "Rest",
+    summary: "Late nights often aren\u2019t rest \u2014 they\u2019re reclaiming time that didn\u2019t feel like ours. Everything \u2014 mood, decisions, willpower \u2014 runs on sleep. Protect it first.",
+    essay: [
+      "You\u2019re not sleeping enough. Not because you can\u2019t \u2014 because the quiet hours after everyone else is asleep feel like the only time that belongs to you. The late-night scrolling, the \u201cone more episode,\u201d the midnight productivity \u2014 these aren\u2019t time management failures. They\u2019re boundary failures. You\u2019re stealing time from tomorrow\u2019s self because today\u2019s self didn\u2019t protect any time for rest, play, or solitude.",
+      "It\u2019s called revenge bedtime procrastination, and it exists because your waking hours don\u2019t feel like yours.",
+      "Everything is running on half power. Your mood. Your decision-making. Your willpower. Your emotional regulation. Your patience with the people you love. Your creativity. Your immune system. There is no intervention \u2014 no supplement, no diet, no exercise protocol, no morning routine \u2014 that comes close to the return on going from six hours of sleep to eight.",
+      "You\u2019re not lazy. You\u2019re not unmotivated. You\u2019re not lacking discipline. You\u2019re tired. And you\u2019ve been tired so long you\u2019ve forgotten what rested feels like. The version of you that sleeps enough is smarter, kinder, braver, and more creative than the version running on caffeine and willpower.",
+      "Every health conversation starts in the wrong place. People optimize nutrition and supplements while sleeping five hours. They train intensely while chronically stressed. They hack their routines while their nervous system is shot. It\u2019s like polishing the paint on a car with no engine.",
+      "Go to bed. Tonight. Not after this episode, not after you finish that task, not at midnight. The hours you\u2019re stealing from tomorrow won\u2019t give you what you actually need tonight.",
+      "And then fix the root cause: protect time for yourself during waking hours so you stop raiding your sleep for it. The late night isn\u2019t really about the show or the scrolling \u2014 it\u2019s about reclaiming something. Find a way to reclaim it before 11pm and the sleep problem solves itself.",
+      "Beneath even this: your body keeps score of what your mind won\u2019t process. The chronic tension, the insomnia, the mystery fatigue \u2014 these are often emotional truths wearing physical costumes. The back pain that started when the job got bad isn\u2019t a coincidence. Before you optimize your supplements, ask: \u201cWhat is my body trying to tell me?\u201d Your body is more honest than your mind. It can\u2019t pretend."
+    ]
+  },
+  {
+    number: 4,
+    name: "Build",
+    summary: "The thing dismissed as \u201cunrealistic\u201d is often the thing that matters most. The block isn\u2019t purpose \u2014 it\u2019s permission. Do the boring daily version of it today.",
+    essay: [
+      "You already know what you want to build. It\u2019s the thing you do in the margins when no one is watching. The thing you\u2019d be embarrassed to admit you take seriously. The skill you practice in private, the topic you can\u2019t stop talking about, the work you do for free without being asked.",
+      "You\u2019ve dismissed it as \u201cnot serious\u201d or \u201cnot realistic\u201d because taking it seriously would mean risking failure at something that actually matters to you. So you stay busy with the second-most-important thing and wonder why you feel empty.",
+      "For those whose signal is buried \u2014 people who\u2019ve been performing someone else\u2019s version of their life for so long their own impulses are invisible \u2014 there\u2019s a sharper tool: resentment. What makes you bitter when you see someone else doing it? \u201cMust be nice to just paint all day\u201d means you want to paint. \u201cI could have built that\u201d means you wish you had. Resentment toward another person\u2019s success is almost always unfulfilled desire in disguise. It\u2019s a map of your unlived life.",
+      "You\u2019re not lacking purpose. You\u2019re lacking permission. You\u2019ve decided the thing that actually pulls you isn\u2019t legitimate enough to pursue. Every week you spend on the safe path instead of the real one is a week of your life spent on someone else\u2019s script. And the gap between what you\u2019re doing and what you want to be doing \u2014 that gap is the exact shape of the restlessness you can\u2019t explain.",
+      "\u201cFollow your passion\u201d is dangerous not because it\u2019s wrong, but because it frames purpose as something you discover. It\u2019s not. It\u2019s something you\u2019re already doing. You just won\u2019t take it seriously.",
+      "Do the boring version of it today. Not the fantasy. Not the end state. The Tuesday-morning, no-audience, unglamorous daily version. You want to write? Sit down and produce bad sentences. You want to build a company? Do one of the four hundred unremarkable tasks between here and there.",
+      "The test isn\u2019t \u201cdoes this excite me?\u201d It\u2019s \u201cam I willing to do the boring version of this when no one is watching?\u201d Purpose isn\u2019t what you\u2019d do with unlimited money. It\u2019s what you\u2019d do on a bad day for no recognition.",
+      "Nobody thinks their way to purpose. They act their way there and recognize it in retrospect. You have to be in motion for purpose to find you. Stop planning. Start doing. The clarity comes after the action, not before."
+    ]
+  },
+  {
+    number: 5,
+    name: "Free",
+    summary: "Most spending is identity maintenance, not life maintenance. The gap between earning and needing is the real wealth. Ask \u201clife or image?\u201d before every purchase.",
+    essay: [
+      "Look at your last month of spending. Most of it wasn\u2019t for your life. It was for your identity \u2014 signaling who you are to others and to yourself. The car, the apartment, the wardrobe, the dinners out, the subscriptions, the gadgets. These aren\u2019t purchases. They\u2019re identity maintenance. And identity maintenance is the most expensive subscription you\u2019ll never see on a bank statement.",
+      "The question that cuts through: \u201cWho am I without this spending?\u201d If the answer feels like \u201cless,\u201d that\u2019s the problem. You\u2019ve outsourced your self-worth to your consumption.",
+      "You\u2019re working to fund an image, not a life. The gap between what you earn and what you need is your actual freedom \u2014 and identity-spending is silently closing that gap to zero. Someone earning sixty thousand who needs forty is freer than someone earning three hundred thousand who needs two-ninety. Freedom isn\u2019t an income level. It\u2019s a margin.",
+      "\u201cMoney is stored freedom\u201d is true but changes nothing because the freedom money provides is abstract and future, while the purchase is concrete and now. You\u2019re not fighting bad logic. You\u2019re fighting neurology. Your brain discounts future rewards hyperbolically. So willpower-based solutions \u2014 \u201cjust spend less\u201d \u2014 fail every time.",
+      "Every dollar in the margin between what you earn and what you need is a tiny employee that works twenty-four hours a day for the rest of your life. Not for more stuff. For the option to walk away from anything that isn\u2019t working. That\u2019s what you\u2019re trading away, one purchase at a time.",
+      "Two moves. First, automate saving so it\u2019s invisible. Earn, automatically save, spend what remains. The psychology reverses: you\u2019re not depriving yourself, you\u2019re spending from what\u2019s genuinely available. The gap between knowing you should save and actually automating it is where all the money leaks.",
+      "Second, before every purchase, ask: \u201cAm I paying for my life or for my image?\u201d You don\u2019t need to eliminate identity-spending entirely \u2014 just make it conscious. The unconscious version is what bleeds you. Once you see the trade-off \u2014 this purchase or three more days of freedom \u2014 the decision often makes itself.",
+      "The cheapest path to financial freedom isn\u2019t earning more. It\u2019s needing fewer things to feel like yourself."
+    ]
+  },
+  {
+    number: 6,
+    name: "Decide",
+    summary: "Indecision isn\u2019t caution \u2014 it\u2019s avoiding ownership. It costs more than any wrong choice. Pick, move, adjust \u2014 today.",
+    essay: [
+      "You\u2019re not stuck because you lack information. You have enough to choose. You\u2019re stuck because choosing means owning the outcome, and indecision lets you avoid responsibility. As long as you haven\u2019t chosen, you can\u2019t be wrong. You can\u2019t fail. You can\u2019t be judged.",
+      "But you also can\u2019t move. And you know this. The information you tell yourself you\u2019re \u201cstill gathering\u201d \u2014 you\u2019ve had enough for weeks. The decision you\u2019re \u201csleeping on\u201d \u2014 you\u2019ve slept on it for months. The options you\u2019re \u201cweighing\u201d \u2014 you\u2019re not weighing them. You\u2019re hiding behind them.",
+      "Indecision isn\u2019t free. It\u2019s the most expensive option available to you. Every day spent in \u201cmaybe\u201d costs energy \u2014 the mental load of holding the question open. It costs opportunity \u2014 the data and progress you\u2019d gain from acting. And worst of all, it costs self-trust. Every time you don\u2019t decide, you teach yourself that you\u2019re someone who can\u2019t commit. That identity compounds. Chronic indecision doesn\u2019t just delay outcomes \u2014 it damages your relationship with yourself.",
+      "The cost of \u201ckeeping your options open\u201d is equally invisible: every option you hold open drains energy from the one you\u2019d commit to. Three half-pursued paths produce less than one fully committed path, every time. Options feel like freedom but function like paralysis.",
+      "For anything reversible \u2014 and ninety-five percent of decisions are reversible \u2014 the cost of being wrong is almost always less than the cost of not choosing. A wrong decision gives you data. No decision gives you nothing.",
+      "Pick. Move. Adjust. That loop, run fast, beats any amount of deliberation.",
+      "For anything you can reverse \u2014 changing jobs, trying a new city, starting a project, asking someone out, adjusting your diet \u2014 decide today. Not next week. Today. The information you\u2019ll gain by acting is worth ten times the analysis you\u2019d do by waiting.",
+      "For the rare irreversible decisions \u2014 marriages, children, signing away equity, burning bridges that can\u2019t be rebuilt \u2014 slow down. Take real time. But be ruthlessly honest about how few decisions actually belong in this category. You\u2019re almost certainly treating reversible decisions as permanent because indecision feels safer than responsibility.",
+      "And the piece that makes this possible: trust yourself to handle whatever comes back. You\u2019re not afraid of choosing wrong. You\u2019re afraid you won\u2019t be able to cope with the fallout. But you\u2019ve survived every bad decision you\u2019ve ever made. That\u2019s a one hundred percent track record. Bet on it."
+    ]
+  },
+  {
+    number: 7,
+    name: "Stay",
+    summary: "When progress goes invisible, the temptation is to restart. But the plateau is where growth deepens, not where it stops. Keep showing up.",
+    essay: [
+      "You\u2019re on a plateau. The early excitement is gone. Progress has gone invisible. You\u2019re showing up, doing the work, and nothing seems to be improving. The temptation is loud: quit, restart, try something new. The beginner phase of a new thing is calling \u2014 fast progress, visible gains, dopamine on tap.",
+      "Every skill has three phases. First, rapid early progress where you feel smart. Second, a long plateau where nothing seems to change. Third, a breakthrough that only comes if you survived the plateau. You\u2019re in phase two, and you want to go back to phase one of something else.",
+      "The plateau is where growth deepens, not where it stops. What looks like stagnation from inside is actually integration \u2014 your unconscious rewiring, building deeper connections, consolidating at a level you can\u2019t yet see. The visible flatline IS the growth. You just can\u2019t perceive it from the surface.",
+      "This is also where the real question lives: \u201cDo I want to be good at this, or did I just want to feel like I was getting good at this?\u201d Those are completely different motivations, and the plateau separates them ruthlessly. Quitting here means you\u2019ll cycle through beginnings forever and master nothing \u2014 addicted to the feeling of progress, never building the thing that only comes from staying.",
+      "Talent is overrated for this exact reason. Talented people hit the plateau later, but they hit it harder, because they\u2019ve never had to push through the unrewarding phase. The \u201cuntalented\u201d person who can stomach being stuck for months will surpass them.",
+      "Keep showing up. Not with willpower \u2014 that runs out. With trust. Trust that the plateau is working even when you can\u2019t see evidence. Trust that the evidence comes later. Trust that every master you admire stood exactly where you\u2019re standing and felt exactly what you\u2019re feeling \u2014 and stayed.",
+      "The question the plateau is asking isn\u2019t \u201care you tough enough?\u201d It\u2019s \u201cdo you actually care about this?\u201d Your answer isn\u2019t what you say. It\u2019s whether you show up tomorrow. And the day after. And the day after that. Not because it feels good. Because it matters.",
+      "You don\u2019t push through plateaus with gritted teeth. You push through by changing your relationship to them. The plateau isn\u2019t punishment. It isn\u2019t failure. It\u2019s the process working below the surface, where you can\u2019t take credit for it and can\u2019t see the progress. That\u2019s not a bug. That\u2019s how depth is built."
+    ]
+  },
+  {
+    number: 8,
+    name: "Feel",
+    summary: "The mind narrates pain into something larger than it is. The raw feeling passes; the story doesn\u2019t. Drop the story, feel the body, let it move through.",
+    essay: [
+      "You\u2019re in pain. Something happened \u2014 a loss, a failure, a rejection, a betrayal, or just the slow accumulation of something being wrong for too long. The pain is real. And on top of the pain, your mind is running a story: \u201cThis shouldn\u2019t have happened.\u201d \u201cI can\u2019t handle this.\u201d \u201cThis will never end.\u201d \u201cSomething is wrong with me.\u201d \u201cIt\u2019s not fair.\u201d",
+      "The pain and the story feel like the same thing. They\u2019re not. The pain is in your body \u2014 a tightness in your chest, a heaviness, a heat, a hollowness. The story is in your head \u2014 a loop of narrative that interprets, amplifies, and extends.",
+      "The raw feeling has a natural duration. It arrives, peaks, and metabolizes \u2014 if you let it. The story has no natural endpoint because it\u2019s generated by thought, and thought can loop forever. The pain is finite. The narrative is infinite. The story is what turns a hard week into a hard year.",
+      "Most people do one of two things: suppress it (\u201cI\u2019m fine\u201d) or amplify it (\u201cthis is the worst thing that\u2019s ever happened\u201d). Both extend the process. Suppression pushes the pain underground where it resurfaces as tension, insomnia, numbness, or explosion at the wrong moment. Amplification inflates the pain beyond its actual size, making it feel unsurvivable when it isn\u2019t.",
+      "\u201cWhat doesn\u2019t kill you makes you stronger\u201d is wrong. Unprocessed suffering doesn\u2019t make you stronger. It makes you armored, reactive, and brittle. Resilience isn\u2019t endurance. It\u2019s how quickly and honestly you metabolize what happened.",
+      "Drop the story. Feel what\u2019s underneath. Go to the body \u2014 the tightness, the heaviness, the heat. Not the voiceover. The raw sensation. It\u2019s finite. It moves. It changes. It passes. It always passes.",
+      "Let it be as bad as it actually is. Not worse \u2014 that\u2019s catastrophizing. Not better \u2014 that\u2019s denial. Just exactly as bad as it is, for exactly as long as it needs to be. The fastest way through pain is straight through, at its actual size.",
+      "This isn\u2019t about controlling your reaction. Sometimes the correct response is grief, rage, or collapse. The principle isn\u2019t \u201cbe strong.\u201d It\u2019s: don\u2019t add to what\u2019s already there. Feel the real thing at its real size, and let it move through you. The people you admire for their resilience aren\u2019t tougher than you. They just metabolize pain faster because they don\u2019t argue with it. They feel it, receive it, and move. Not because they\u2019re brave. Because they didn\u2019t waste energy performing strength they didn\u2019t have."
+    ]
+  },
+  {
+    number: 9,
+    name: "Own",
+    summary: "A calendar full of unconscious yeses leaves no room for what matters. Before every yes: \u201cIf I say yes to this, I\u2019m saying no to ___.\u201d",
+    essay: [
+      "Your calendar is full of things you never consciously chose. Look at last week. How many of those hours were spent on things that genuinely matter to you, and how many were commitments you absorbed by default? The meeting that could have been an email. The project you said yes to because saying no felt too expensive. The social obligation you attended out of guilt. The constant availability that masquerades as responsibility.",
+      "You\u2019re not \u201cbusy.\u201d You\u2019re defaulting to yes because no requires a clarity of priorities you haven\u2019t committed to. And every unconscious yes is a no to something else \u2014 your health, your creative work, your rest, the thing you\u2019ve been avoiding that actually matters.",
+      "You don\u2019t lack time. You lack a clear \u201cno.\u201d Every hour you spend on an unconscious yes is an hour stolen from the thing you actually care about. And the most insidious part: busyness itself is a form of hiding. If you cleared your calendar, you\u2019d have to face the emptiness \u2014 and worse, you\u2019d have to choose what to fill it with. Choice means responsibility. Responsibility means you can fail. So you stay busy and let external demands make your choices for you. It feels like sacrifice. It\u2019s actually avoidance.",
+      "\u201cI don\u2019t have time\u201d always means \u201cI haven\u2019t decided this matters enough.\u201d That\u2019s not a judgment \u2014 it\u2019s a liberation. The moment you admit it\u2019s a choice, you can make a different one.",
+      "You have about four thousand weeks. You\u2019ve used a lot of them. That number isn\u2019t meant to create anxiety. It\u2019s meant to clarify: what actually deserves to be here?",
+      "Before every yes, finish the sentence: \u201cIf I say yes to this, I\u2019m saying no to ___.\u201d Then choose with your eyes open. That\u2019s the entire practice. No productivity system, no time-blocking app, no morning routine. Just the sentence, completed honestly, before you commit.",
+      "The blank will usually fill itself instantly \u2014 and it will usually be something that matters more than what you\u2019re about to agree to. Once the trade-off is visible, the \u201cyes\u201d stops feeling obligatory and starts feeling like what it is: a choice you\u2019re making against your own interests.",
+      "Any time you consciously author \u2014 including rest, play, doing absolutely nothing \u2014 is time well spent. An afternoon spent doing nothing on purpose is regenerative. The same afternoon spent doing nothing by default is corrosive. The difference is authorship. The only time truly lost is time you weren\u2019t the one choosing."
+    ]
+  },
+  {
+    number: 10,
+    name: "Be",
+    summary: "Self-consciousness and joy are mutually exclusive. The monitoring kills the aliveness. Lose yourself in something real today.",
+    essay: [
+      "You\u2019re watching yourself live instead of living. There\u2019s a voice running in the background \u2014 monitoring, evaluating, comparing. \u201cAm I happy? Is this working? Am I doing this right? How does this look? How does this compare?\u201d It\u2019s running at dinner with friends, during moments that should be absorbing, in the middle of experiences you planned specifically to enjoy.",
+      "You\u2019re not present. You\u2019re performing presence while a part of you hovers above, grading the experience in real time.",
+      "Self-consciousness and joy are mutually exclusive states. You cannot be fully absorbed in something and watching yourself do it at the same time. The monitoring IS the thing killing the aliveness. Not your circumstances, not your lack of achievement, not the gap between where you are and where you think you should be. The voice. The constant evaluating.",
+      "The biggest lie the culture sells is that joy is a destination \u2014 get the promotion, the partner, the body, the house, then you\u2019ll be happy. But \u201cthen\u201d never comes. There\u2019s always another level, another comparison, another gap. Joy postponed is joy denied.",
+      "The second lie is subtler: \u201cpursue happiness\u201d itself. Happiness isn\u2019t something you can aim at directly. Trying to be happy is like trying to fall asleep \u2014 the effort is the thing preventing the outcome. Joy is a byproduct, not a target.",
+      "Lose yourself in something real today. There are three doors, and you only need to walk through one.",
+      "Make something \u2014 cook a meal, write a paragraph, build anything with your hands. The act of creation crowds out self-consciousness because you can\u2019t monitor yourself and be absorbed in what you\u2019re making at the same time.",
+      "Help someone \u2014 not at scale, not for recognition. Just let your effort matter to one person today. Contribution pulls you out of your own head and into the world.",
+      "Be fully present with one person \u2014 put the phone away, stop rehearsing what to say next, and actually be in the conversation. Intimacy \u2014 the experience of the gap between you and another person temporarily disappearing \u2014 is one of the most reliable sources of joy available, and it costs nothing except attention.",
+      "None of these require achievement. None cost money. None depend on circumstance. They depend only on presence \u2014 your ability to be fully where you are instead of watching yourself be there.",
+      "The practice isn\u2019t to \u201cfind joy.\u201d It\u2019s to notice what kills it \u2014 the monitoring, the comparing, the performing \u2014 and stop. Joy doesn\u2019t need to be pursued. It needs to be allowed."
+    ]
+  }
+];
+
+const container = document.getElementById('principles');
+let activeIndex = -1;
+
+principles.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'principle-card';
+  card.id = 'principle-' + i;
+
+  const essayHtml = p.essay.map(para => '<p>' + para + '</p>').join('');
+
+  card.innerHTML =
+    '<div class="principle-header" onclick="toggle(' + i + ')">' +
+      '<span class="principle-number">' + String(p.number).padStart(2, '0') + '</span>' +
+      '<div class="principle-info">' +
+        '<div class="principle-name">' + p.name + '</div>' +
+        '<div class="principle-summary">' + p.summary + '</div>' +
+      '</div>' +
+      '<span class="principle-toggle">+</span>' +
+    '</div>' +
+    '<div class="principle-body">' +
+      '<div class="principle-body-inner">' + essayHtml + '</div>' +
+    '</div>';
+
+  container.appendChild(card);
+});
+
+function toggle(index) {
+  const cards = document.querySelectorAll('.principle-card');
+
+  if (activeIndex === index) {
+    // Collapse current
+    const card = cards[index];
+    const body = card.querySelector('.principle-body');
+    card.classList.remove('active');
+    body.style.maxHeight = '0';
+    activeIndex = -1;
+    return;
+  }
+
+  // Collapse previous
+  if (activeIndex !== -1) {
+    const prev = cards[activeIndex];
+    const prevBody = prev.querySelector('.principle-body');
+    prev.classList.remove('active');
+    prevBody.style.maxHeight = '0';
+  }
+
+  // Expand new
+  const card = cards[index];
+  const body = card.querySelector('.principle-body');
+  card.classList.add('active');
+  body.style.maxHeight = body.scrollHeight + 'px';
+  activeIndex = index;
+
+  // Scroll into view after a brief delay for animation
+  setTimeout(() => {
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+</script>
+</body>
+</html>
